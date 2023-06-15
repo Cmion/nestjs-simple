@@ -11,12 +11,32 @@ generator client {
 }
 
 model User {
-  id    String   @id @default(auto()) @map("_id") @db.ObjectId
-  email String   @unique
-  role  UserRole @default(user)
+  id           String             @id @default(auto()) @map("_id") @db.ObjectId
+  email        String             @unique
+  password     String
+  role         UserRole           @default(user)
+  created_at   DateTime           @default(now())
+  updated_at   DateTime           @updatedAt
+  user_history UserStockHistory[]
 }
 
 enum UserRole {
   user
   admin
+}
+
+model UserStockHistory {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String   @db.ObjectId
+  name       String
+  symbol     String
+  date       DateTime
+  open       Float
+  high       Float
+  low        Float
+  close      Float
+  volume     BigInt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
