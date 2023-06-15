@@ -63,8 +63,8 @@ export class AppService {
     });
   }
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.findByEmail(username);
+  async validateUser(email: string, pass: string): Promise<any> {
+    const user = await this.findByEmail(email);
     if (!user) {
       return null;
     }
