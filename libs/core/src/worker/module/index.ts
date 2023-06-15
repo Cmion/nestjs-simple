@@ -3,6 +3,7 @@ import { WorkerService } from '../service';
 import { ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { MicroserviceTokens, WorkerQueue } from '../../utils/enums';
+import { EmailService } from '@/core/worker/service/email';
 
 const WORKER_PROVIDERS = [
   {
@@ -23,7 +24,7 @@ const WORKER_PROVIDERS = [
 ];
 
 @Module({
-  providers: [...WORKER_PROVIDERS, WorkerService],
-  exports: [...WORKER_PROVIDERS, WorkerService],
+  providers: [...WORKER_PROVIDERS, WorkerService, EmailService],
+  exports: [...WORKER_PROVIDERS, WorkerService, EmailService],
 })
 export class WorkerModule {}

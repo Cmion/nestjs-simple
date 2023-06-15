@@ -10,6 +10,7 @@ import { LocalStrategy } from '../strategy/local';
 import { JwtStrategy } from '../strategy/jwt';
 import { StockModule } from '../../stock/module';
 import { CoreModule } from '@/core/module';
+import { EmailService } from '@/core/worker/service/email';
 
 @Global()
 @Module({
@@ -27,7 +28,13 @@ import { CoreModule } from '@/core/module';
     StockModule,
   ],
   controllers: [AppController],
-  providers: [LocalStrategy, JwtStrategy, AppService, PrismaService],
+  providers: [
+    LocalStrategy,
+    JwtStrategy,
+    AppService,
+    PrismaService,
+    EmailService,
+  ],
   exports: [PrismaService],
 })
 export class AppModule {}

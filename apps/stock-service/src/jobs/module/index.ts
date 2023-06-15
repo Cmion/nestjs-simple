@@ -4,6 +4,7 @@ import { JobService } from '../service';
 import { ConfigModule } from '@nestjs/config';
 import config from '@/config';
 import { HttpModule } from '@nestjs/axios';
+import { EmailWorkerService } from '../service/email/service';
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { HttpModule } from '@nestjs/axios';
     HttpModule,
   ],
   controllers: [JobController],
-  providers: [JobService],
+  providers: [JobService, EmailWorkerService],
 })
 export class JobModule {}

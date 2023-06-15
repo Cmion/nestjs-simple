@@ -9,4 +9,5 @@ export enum MicroserviceTokens {
 export enum QueueTasks {
   PING = 'task.send.ping',
   GET_STOCK = 'task.get.stock.info',
+  SEND_EMAIL = 'task.send.email',
 }

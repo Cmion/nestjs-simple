@@ -24,6 +24,12 @@ export default () => ({
     },
   },
   workers: {
+    email: {
+      resend: {
+        apiKey: process.env.RESEND_EMAIL_API_KEY,
+      },
+      noReply: process.env.EMAIL_NO_REPLY,
+    },
     rabbitmq: {
       uri: process.env.RMQ_URI,
     },
