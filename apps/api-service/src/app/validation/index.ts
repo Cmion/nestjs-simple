@@ -30,7 +30,7 @@ export class LoginDTO {
   password: string;
 }
 
-export class ResetPasswordDTO {
+export class ChangePasswordDTO {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
@@ -40,4 +40,11 @@ export class ResetPasswordDTO {
   @IsString()
   @IsNotEmpty()
   new_password: string;
+}
+
+export class ResetPasswordDTO {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  email: string;
 }

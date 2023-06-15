@@ -10,7 +10,12 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AppService } from '../service';
-import { LoginDTO, RegistrationDTO, ResetPasswordDTO } from '../validation';
+import {
+  ChangePasswordDTO,
+  LoginDTO,
+  RegistrationDTO,
+  ResetPasswordDTO,
+} from '../validation';
 import { JwtAuthGuard, LocalAuthGuard } from '@/core/utils/guards';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
@@ -26,12 +31,19 @@ export class AppController {
     return await this.service.register(input);
   }
   @ApiBearerAuth()
-  @Post('reset-password')
+  @Post('change-password')
   @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe({ transform: true }))
-  async resetPassword(@Body() input: ResetPasswordDTO, @Req() req: Request) {
-    return await this.service.resetPassword(input, (req.user as any).id);
+  async changePassword(@Body() input: ChangePasswordDTO, @Req() req: Request) {
+    return await this.service.changePassword(input, (req.user as any).id);
+  }
+
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async resetPassword(@Body() input: ResetPasswordDTO) {
+    return await this.service.resetPassword(input);
   }
 
   @Post('login')

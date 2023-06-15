@@ -4,7 +4,11 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { RegistrationDTO, ResetPasswordDTO } from '../validation';
+import {
+  ChangePasswordDTO,
+  RegistrationDTO,
+  ResetPasswordDTO,
+} from '../validation';
 import { ConfigService } from '@nestjs/config';
 import { compare, hash } from 'bcrypt';
 import { PrismaService } from '../../../../../prisma/connect';
@@ -25,7 +29,19 @@ export class AppService {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
-  async resetPassword(input: ResetPasswordDTO, userId: string) {
+  async resetPassword(input: ResetPasswordDTO) {
+    const user = await this.findByEmail(input.email);
+    if (!user) {
+      throw new BadRequestException('User does not exist');
+    }
+
+    //TODO: Response can be standardized
+    return {
+      message: 'An email has been sent to your registered email address',
+    };
+  }
+
+  async changePassword(input: ChangePasswordDTO, userId: string) {
     let user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
       throw new BadRequestException('User does not exist');
