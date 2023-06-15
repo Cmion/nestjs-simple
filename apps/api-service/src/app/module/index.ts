@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from '../strategy/local';
 import { JwtStrategy } from '../strategy/jwt';
 import { StockModule } from '../../stock/module';
+import { CoreModule } from '@/core/module';
 
 @Global()
 @Module({
@@ -22,6 +23,7 @@ import { StockModule } from '../../stock/module';
       secret: process.env.JWT_SECRET_KEY,
       signOptions: { expiresIn: process.env.JWT_EXPIRATION || 172800 },
     }),
+    CoreModule,
     StockModule,
   ],
   controllers: [AppController],

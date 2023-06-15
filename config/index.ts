@@ -9,6 +9,11 @@ export default () => ({
     // Expiration in seconds
     jwtExpiration: process.env.JWT_EXPIRATION || 60 ** 60 * 72,
   },
+  externals: {
+    stock: {
+      url: process.env.STOCK_API_URL,
+    },
+  },
   encryption: {
     salt: parseInt(process.env.ENCRYPTION_SALT, 10) || 12,
     jwtSecretKey: process.env.JWT_SECRET_KEY,

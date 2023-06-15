@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { JobController } from '../controller';
-import { AppService } from '../service';
+import { JobService } from '../service';
 import { ConfigModule } from '@nestjs/config';
-import config from '@/config'
+import config from '@/config';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -10,8 +11,9 @@ import config from '@/config'
       isGlobal: true,
       load: [config],
     }),
+    HttpModule,
   ],
   controllers: [JobController],
-  providers: [AppService],
+  providers: [JobService],
 })
 export class JobModule {}
