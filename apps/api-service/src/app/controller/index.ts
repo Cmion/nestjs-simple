@@ -28,6 +28,7 @@ export class AppController {
   @ApiBearerAuth()
   @Post('reset-password')
   @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe({ transform: true }))
   async resetPassword(@Body() input: ResetPasswordDTO, @Req() req: Request) {
     return await this.service.resetPassword(input, (req.user as any).id);
