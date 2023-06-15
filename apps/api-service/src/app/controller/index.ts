@@ -10,9 +10,12 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AppService } from '../service';
-import { RegistrationDTO } from '../validation';
-import { LocalAuthGuard } from '@/core/utils/guards';
+import { LoginDTO, RegistrationDTO, ResetPasswordDTO } from '../validation';
+import { JwtAuthGuard, LocalAuthGuard } from '@/core/utils/guards';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 
+@ApiTags('App')
 @Controller()
 export class AppController {
   constructor(private readonly service: AppService) {}
@@ -22,11 +25,18 @@ export class AppController {
   async register(@Body() input: RegistrationDTO) {
     return await this.service.register(input);
   }
+  @ApiBearerAuth()
+  @Post('reset-password')
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async resetPassword(@Body() input: ResetPasswordDTO, @Req() req: Request) {
+    return await this.service.resetPassword(input, (req.user as any).id);
+  }
 
   @Post('login')
   @UseGuards(LocalAuthGuard)
   @HttpCode(HttpStatus.OK)
-  async login(@Req() req) {
+  async login(@Body() body: LoginDTO, @Req() req) {
     return req.user;
   }
 }

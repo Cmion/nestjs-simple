@@ -1,5 +1,10 @@
-import { ConflictException, HttpStatus, Injectable } from '@nestjs/common';
-import { RegistrationDTO } from '../validation';
+import {
+  BadRequestException,
+  ConflictException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
+import { RegistrationDTO, ResetPasswordDTO } from '../validation';
 import { ConfigService } from '@nestjs/config';
 import { compare, hash } from 'bcrypt';
 import { PrismaService } from '../../../../../prisma/connect';
@@ -18,6 +23,31 @@ export class AppService {
 
   async findOne(id: string): Promise<User> {
     return this.prisma.user.findUnique({ where: { id } });
+  }
+
+  async resetPassword(input: ResetPasswordDTO, userId: string) {
+    let user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      throw new BadRequestException('User does not exist');
+    }
+
+    const isValidPassword = await this.verifyHashedPassword(
+      input.old_password,
+      user.password,
+    );
+
+    if (!isValidPassword) {
+      throw new BadRequestException('Password is incorrect, please try again');
+    }
+
+    user = await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        password: await this.generateHashedPassword(input.new_password),
+      },
+    });
+
+    return user;
   }
   async register(user: RegistrationDTO) {
     if (await this.findByEmail(get(user, 'email'))) {
