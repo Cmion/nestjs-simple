@@ -1,0 +1,32 @@
+{
+  "bail": true,
+  "testTimeout": 200000,
+  "maxWorkers": 2,
+  "watchAll": false,
+  "logHeapUsage":true,
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "./",
+  "testEnvironment": "node",
+  "testRegex": ".spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "collectCoverageFrom": [
+    "<rootDir>/libs/core/**/*.(t|j)s",
+    "<rootDir>/apps/**/src/**/*.(t|j)s"
+  ],
+  "testPathIgnorePatterns" : [
+    "<rootDir>/apps/api-service/test/",
+    "<rootDir>/apps/stock-service/test/"
+  ],
+  "moduleNameMapper": {
+    "^@config": "<rootDir>/config",
+    "^@config/(.*)": "<rootDir>/config/$1",
+    "chv/core": "<rootDir>/libs/core/src",
+    "chv/core/(.*)": "<rootDir>/libs/core/src/$i"
+  },
+  "roots": [
+    "<rootDir>/apps/",
+    "<rootDir>/libs/"
+  ]
+}

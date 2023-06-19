@@ -16,7 +16,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix(`v${config.get('api.version')}`);
 
-  app.use(morgan('tiny'))
+  app.use(morgan('tiny'));
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -24,6 +24,7 @@ async function bootstrap() {
     }),
   );
 
+  console.log({ RMQ_URI: config.get('workers.rabbitmq.uri') });
   await app.connectMicroservice({
     transport: Transport.RMQ,
     options: {

@@ -12,6 +12,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/api-service/main",
+    "build:stocks": "nest build stock-service",
     "start:stocks": "nest start stock-service",
     "start:dev:stocks": "nest start stock-service --watch",
     "start:debug:stocks": "nest start stock-service --debug --watch",
@@ -21,7 +22,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/node-challenge/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/node-challenge/test/jest-e2e.json",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "local:ci:pipeline": "chmod +x ./scripts/ci-pipeline.sh && ./scripts/ci-pipeline.sh"
   },
   "dependencies": {
     "@nestjs/axios": "^2.0.0",
@@ -34,6 +38,7 @@
     "@nestjs/platform-express": "^9.4.3",
     "@nestjs/swagger": "^6.3.0",
     "@nestjs/terminus": "^9.2.2",
+    "@prisma/client": "^4.15.0",
     "amqp-connection-manager": "^4.1.13",
     "amqplib": "^0.10.3",
     "axios": "^1.4.0",
@@ -52,7 +57,6 @@
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
-    "@prisma/client": "^4.15.0",
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.17",
     "@types/jest": "29.5.0",

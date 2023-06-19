@@ -16,13 +16,13 @@ export class JobService {
       'externals.stock.url',
     )}/?s=${ticker}&f=sd2t2ohlcvn&h&e=json`;
 
+    console.log({ URL: url });
+
     const stock = await lastValueFrom(await this.http.get(url));
 
+    console.log(stock);
     // console.log(stock.data)
 
     return get(stock.data, ['symbols', 0]);
-  }
-  getHello(): string {
-    return 'Hello World!';
   }
 }

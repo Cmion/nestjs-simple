@@ -1,0 +1,30 @@
+version: "3.8"
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  api-service:
+    container_name: api-service
+    restart: on-failure
+    build:
+      context: "./"
+      dockerfile: docker/api-service/Dockerfile
+    ports:
+      - "3112:3112"
+    depends_on:
+      - stock-service
+    networks:
+      - app-network
+
+  stock-service:
+    container_name: stock-service
+    restart: on-failure
+    build:
+      context: "./"
+      dockerfile: ./docker/stock-service/Dockerfile
+    ports:
+      - "3113:3113"
+    networks:
+      - app-network
